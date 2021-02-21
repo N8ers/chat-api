@@ -1,0 +1,35 @@
+This is a self refrence guide, I got a lot of information from Colt Steels video on setting up eslint & 
+Traversy Medias guide on ESlint and Prettier with AirBnB. This is combination of that knowledge
+and ways to set things up in VS code for auto formatting.
+
+*/  SETTING UP ESLINT (not globally)  */
+what is eslint, it finds code problems (code errors)
+
+* if eslint is installed globally, remove it: `npm uninstall eslint`
+within project run `npm i -D eslint`
+then `.\node_modules\.bin\eslint --init`
+
+
+*/  INTAGRATING W/ VS CODE  */
+download the eslint extension
+in settings, go to `extensions` > `eslint` > select `Always Show Status`
+for auto fix, go to settings toggle to `json` editor and add this line
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+
+*/  SETTING UP PRETTIER (traversy version)  */
+vscode > settings > 'Format On Save'
+npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-node eslint-config-node
+npx install-peerdeps --dev eslint-config-airbnb
+`.\node_modules\.bin\eslint --init`
+* in the setup PICK: 'check syntax and find problems'
+* edit the .eslintrc file to use the plugins we installed
+
+*/  ESLINT + PRETTIER w/ ON SAVE  */
+npm i -D eslint eslint-config-prettier eslint-plugin-prettier prettier
+
+
+
+
+*/  NATHAN FLAVOR  */
