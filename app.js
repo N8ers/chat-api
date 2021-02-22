@@ -1,5 +1,4 @@
 const express = require('express')
-// const sequelize = require('./database/dbConfig')
 const { sequelize } = require('./models/index')
 
 const app = express()

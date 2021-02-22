@@ -9,7 +9,8 @@ module.exports = function (sequelize, DataTypes) {
   const message = sequelize.define('Message', {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     content: { type: DataTypes.STRING, allowNull: false },
     createdAt: { type: DataTypes.DATE, allowNull: false },
@@ -18,15 +19,15 @@ module.exports = function (sequelize, DataTypes) {
 
   message.associate = function (models) {
     message.belongsTo(models.User, {
-      foreignKey: id,
+      foreignKey: 'id',
       as: 'authorId'
     })
     
     message.hasOne(models.Conversation, {
-      foreignKey: id,
+      foreignKey: 'id',
       as: 'conversationId'
     })
   }
 
-  return Message;
+  return message;
 }
