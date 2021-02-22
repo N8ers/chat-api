@@ -1,5 +1,6 @@
 const express = require('express')
-const sequelize = require('./database/dbConfig')
+// const sequelize = require('./database/dbConfig')
+const { sequelize } = require('./models/index')
 
 const app = express()
 const PORT = 3000
@@ -15,4 +16,9 @@ app.get('/dbConnectionStatus', async (req, res) => {
   }
 })
 
-app.listen(PORT, () => console.log(`chat-api running on port ${PORT}`));
+sequelize
+  .authenticate()
+  .then(() => {
+    app.listen(PORT, () => console.log(`chat-api running on port ${PORT}`));
+  })
+  .catch((err) => console.log('ERRO ', err))
