@@ -1,8 +1,3 @@
-// SCHEMA
-
-// id
-// userName
-
 module.exports = function (sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
@@ -18,4 +13,3 @@ module.exports = function (sequelize, DataTypes) {
   
   return User;
 }
-

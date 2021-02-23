@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const conversation = sequelize.define('Conversation', {
+  const conversationMember = sequelize.define('conversationMember', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -9,5 +9,12 @@ module.exports = function (sequelize, DataTypes) {
     updatedAt: { type: DataTypes.DATE, allowNull: false },
   });
 
-  return conversation;
+  conversationMember.associate = function (models) {
+    conversationMember.hasMany(models.User, {
+      foreignKey: 'id',
+      as: 'memberId'
+    })
+  }
+
+  return conversationMember;
 }

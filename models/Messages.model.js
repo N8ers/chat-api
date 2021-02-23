@@ -1,10 +1,3 @@
-// SCHEMA
-
-// id
-// content
-// Author_id -> Foreign key Users Id
-// Conversation_id -> Foreign key Conversations Id
-
 module.exports = function (sequelize, DataTypes) {
   const message = sequelize.define('Message', {
     id: {
