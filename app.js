@@ -1,19 +1,7 @@
-const express = require('express')
+const app = require('./routes/index')
 const { sequelize } = require('./models/index')
 
-const app = express()
 const PORT = 3000
-
-app.get('/', (req, res) => res.send('Hello Nathan!'))
-
-app.get('/dbConnectionStatus', async (req, res) => {
-  try {
-    await sequelize.authenticate()
-    res.status(200).send('connection good')
-  } catch (error) {
-    res.status(500).send(`connection bad \n${error}`)
-  }
-})
 
 sequelize
   .authenticate()
