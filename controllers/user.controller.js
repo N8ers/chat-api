@@ -35,7 +35,14 @@ async function editUser (req) {
   });
 }
 
-async function deleteUser (req) { }
+async function deleteUser (req) {
+  let { id } = req.body
+  let query = `DELETE from "user" WHERE id = ${id}`
+  return await sequelize.query(query, {
+    model: sequelize.models.User,
+    type: sequelize.QueryTypes.SELECT
+  });
+}
 
 module.exports = {
   getAllUsers,

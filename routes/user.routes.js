@@ -27,6 +27,9 @@ router.put('/user', async (req, res) => {
 })
 
 // delete User by id
-router.delete('/user', async (req, res) => { })
+router.delete('/user', async (req, res) => { 
+  let result = await deleteUser(req)
+  res.send({ user: result })
+})
 
 module.exports = router;
