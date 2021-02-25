@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const routes = {
-  status: require('./status.routes')
+  status: require('./status.routes'),
+  user: require('./user.routes')
 }
 
 let app = express()
@@ -18,5 +19,7 @@ app.use(
 )
 
 app.use('/status', routes.status)
+app.use('/user', routes.user)
+
 
 module.exports = app;
