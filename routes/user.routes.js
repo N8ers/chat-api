@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { getAllUsers, createUser } = require('../controllers/user.controller')
+const { getAllUsers, getUserById, createUser } = require('../controllers/user.controller')
 
 // get Users
 router.get('/users', async (req, res) => {
@@ -9,7 +9,10 @@ router.get('/users', async (req, res) => {
 })
 
 // get User by id
-router.get('/user', (req, res) => { })
+router.get('/user', async (req, res) => {
+  let user = await getUserById(req)
+  res.send(user)
+})
 
 // create User
 router.post('/user', async (req, res) => {
