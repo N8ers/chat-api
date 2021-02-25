@@ -26,8 +26,21 @@ async function createUser (req) {
   });
 }
 
+async function editUser (req) {
+  let { username, id } = req.body
+  let query = `UPDATE "user" SET username = '${username}' WHERE id = ${id}`
+  return await sequelize.query(query, {
+    model: sequelize.models.User,
+    type: sequelize.QueryTypes.SELECT
+  });
+}
+
+async function deleteUser (req) { }
+
 module.exports = {
   getAllUsers,
   getUserById,
-  createUser
+  createUser,
+  editUser,
+  deleteUser
 }
