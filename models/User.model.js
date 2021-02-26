@@ -1,13 +1,20 @@
+const { Sequelize } = require("sequelize");
+
 module.exports = function (sequelize, DataTypes) {
   const user = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
     username: { type: DataTypes.STRING, allowNull: false },
-    createdAt: { type: DataTypes.DATE, allowNull: false },
-    updatedAt: { type: DataTypes.DATE, allowNull: false }
+    createdAt: { type: DataTypes.DATE },
+    updatedAt: { type: DataTypes.DATE }
+  },
+  {
+    timestamps: true,
+    tableName: 'users'
   });
   
   return user;
