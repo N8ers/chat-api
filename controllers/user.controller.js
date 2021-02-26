@@ -1,47 +1,37 @@
 const { sequelize, Sequelize } = require('../models/index')
 
 async function getAllUsers () {
-  let query = `SELECT * FROM "user"`
-  return await sequelize.query(query, {
-    model: sequelize.models.User,
-    type: sequelize.QueryTypes.SELECT
-  });
+  return sequelize.models.User.findAll();
 }
 
 async function getUserById (req) {
-  let { id } = req.body
-  let query = `SELECT * FROM "user" WHERE id = ${id}`
-  return await sequelize.query(query, {
-    model: sequelize.models.User,
-    type: sequelize.QueryTypes.SELECT
-  });
+  return sequelize.models.User.findAll({
+    where: {
+      id: req.body.id
+    }
+  })
 }
 
 async function createUser (req) {
-  let { username } = req.body
-  let query = `INSERT INTO "user" (username) VALUES ('${username}')`
-  return await sequelize.query(query, {
-    model: sequelize.models.User,
-    type: sequelize.QueryTypes.SELECT
-  });
+  return sequelize.models.User.create({
+    username: req.body.username
+  })
 }
 
 async function editUser (req) {
-  let { username, id } = req.body
-  let query = `UPDATE "user" SET username = '${username}' WHERE id = ${id}`
-  return await sequelize.query(query, {
-    model: sequelize.models.User,
-    type: sequelize.QueryTypes.SELECT
-  });
+  return sequelize.models.User.update({ username: req.body.username }, { 
+    where: {
+      id: req.body.id
+    }
+  })
 }
 
 async function deleteUser (req) {
-  let { id } = req.body
-  let query = `DELETE from "user" WHERE id = ${id}`
-  return await sequelize.query(query, {
-    model: sequelize.models.User,
-    type: sequelize.QueryTypes.SELECT
-  });
+  return sequelize.models.User.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
 }
 
 module.exports = {
