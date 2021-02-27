@@ -6,9 +6,7 @@ async function getAllUsers () {
 
 async function getUserById (req) {
   return sequelize.models.User.findAll({
-    where: {
-      id: req.body.id
-    }
+    where: { id: req.body.id }
   })
 }
 
@@ -20,9 +18,7 @@ async function createUser (req) {
 
 async function editUser (req) {
   let [ id, result ] = await sequelize.models.User.update({ username: req.body.username }, { 
-    where: {
-      id: req.body.id
-    },
+    where: { id: req.body.id },
     returning: true
   })
   let [ dataValue ] = result
@@ -31,9 +27,8 @@ async function editUser (req) {
 
 async function deleteUser (req) {
   return sequelize.models.User.destroy({
-    where: {
-      id: req.body.id
-    }
+    where: { id: req.body.id },
+    returning: true
   })
 }
 
