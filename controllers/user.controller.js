@@ -19,11 +19,14 @@ async function createUser (req) {
 }
 
 async function editUser (req) {
-  return sequelize.models.User.update({ username: req.body.username }, { 
+  let [ id, result ] = await sequelize.models.User.update({ username: req.body.username }, { 
     where: {
       id: req.body.id
-    }
+    },
+    returning: true
   })
+  let [ dataValue ] = result
+  return dataValue
 }
 
 async function deleteUser (req) {
