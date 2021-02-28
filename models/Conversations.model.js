@@ -2,11 +2,16 @@ module.exports = function (sequelize, DataTypes) {
   const conversation = sequelize.define('Conversation', {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
-    createdAt: { type: DataTypes.DATE, allowNull: false },
-    updatedAt: { type: DataTypes.DATE, allowNull: false },
+    createdAt: { type: DataTypes.DATE },
+    updatedAt: { type: DataTypes.DATE }
+  },
+  {
+    timestamps: true,
+    tableName: 'conversations'
   });
 
   return conversation;
