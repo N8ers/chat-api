@@ -4,7 +4,8 @@ const cors = require('cors')
 
 const routes = {
   status: require('./status.routes'),
-  user: require('./user.routes')
+  user: require('./user.routes'),
+  conversation: require('./conversation.routes')
 }
 
 let app = express()
@@ -20,6 +21,7 @@ app.use(
 
 app.use('/status', routes.status)
 app.use('/user', routes.user)
+app.use('/conversation', routes.conversation)
 
 
 module.exports = app;
