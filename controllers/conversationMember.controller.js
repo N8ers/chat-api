@@ -30,7 +30,8 @@ async function createConversationMember (req) {
 async function deleteConversationMember (req) {
   return sequelize.models.ConversationMember.destroy({
     where: {
-      memberId: req.body.userId
+      memberId: req.body.userId,
+      conversationId: req.body.conversationId
     }
   })
 }
