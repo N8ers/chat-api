@@ -3,6 +3,7 @@ const router = require('express').Router()
 const { 
   getAllConversations, 
   getConversation, 
+  getConversationsByUser,
   createConversation, 
   deleteConversation 
 } = require('../controllers/conversation.controller')
@@ -17,6 +18,11 @@ router.get('/conversations', async (req, res) => {
 router.get('/conversation', async (req, res) => {
   let conversation = await getConversation(req)
   res.send(conversation)
+})
+
+router.get('/conversationsByUser', async (req, res) => {
+  let conversations = await getConversationsByUser(req)
+  res.send(conversations)
 })
 
 // create Conversation
