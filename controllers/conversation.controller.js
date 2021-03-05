@@ -10,16 +10,46 @@ async function getConversation (req) {
   })
 }
 
-async function getConversationsByUser (req) {
-  let result = sequelize.models.Conversation.findAll({
-    where: { id: req.body.userId },
-    include: [{
-      model: sequelize.models.User,
-      required: true
-    }]
+async function getFirstConversationByUser (req) {
+  let conversationMembers = await sequelize.models.ConversationMember.findAll({
+    raw: true,
+    attributes: ['conversationId'],
+    where: { memberId: req.body.userId },
   })
-  console.log('result ', result)
-  return result
+
+  let conversationIds = conversationMembers.map((conversation) => conversation.conversationId)
+
+  let convoOneMembers = await sequelize.models.ConversationMember.findAll({
+    raw: true,
+    attributes: ['memberId'],
+    where: { conversationId: conversationIds[0] },
+  })
+
+  let rawConvoOneMembers = convoOneMembers.map((m) => m.memberId)
+
+  let members = await sequelize.models.User.findAll({
+    raw: true,
+    attributes: ['id', 'username'],
+    where: { id: rawConvoOneMembers }
+  })
+
+
+  // we want to format the above into this
+  let conversations = [
+    {
+      conversationId: null,
+      conversationMembers: [],
+    }
+  ]
+
+  conversations[0].conversationId = conversationIds[0]
+  conversations[0].conversationMembers = members
+
+  return conversations
+}
+
+async function getConversationsByUser (req) {
+  return await getFirstConversationByUser(req)
 }
 
 async function createConversation () {
