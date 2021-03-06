@@ -10,25 +10,15 @@ async function getConversation (req) {
   })
 }
 
-async function getFirstConversationByUser (req) {
+async function getConversationsByUser (req) {
   let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
     raw: true,
     attributes: ['conversationId'],
     where: { memberId: req.body.userId },
   })
 
-  // console.log('yo yo yo: ', conversationsUserIsIn)
 
   let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
-
-  // let conversationUsers = await sequelize.models.ConversationMember.findAll({
-  //   raw: true,
-  //   // attributes: ['memberId', 'conversationId'],
-  //   includes: [{ model: 'User' }],
-  //   where: { conversationId: conversationIds },
-  // })
-
-  // console.log('conversationUsers ', conversationUsers)
 
   let query = `select
   conversation_members."conversationId", users.id as "userId", users.username as "username"
@@ -36,38 +26,12 @@ async function getFirstConversationByUser (req) {
   inner join users on conversation_members."memberId" = users.id
   where "conversationId" in (:conversationIds)`
 
-  let rawQueryTest = await sequelize.query(query, { 
+  let usersConversations = await sequelize.query(query, { 
     type: Sequelize.QueryTypes.SELECT,
     replacements: { conversationIds: conversationIds }
   })
 
-  console.log('yo yo yo: ', rawQueryTest)
-
-  // let rawConvoOneMembers = convoOneMembers.map((m) => m.memberId)
-
-  // let members = await sequelize.models.User.findAll({
-  //   raw: true,
-  //   attributes: ['id', 'username'],
-  //   where: { id: rawConvoOneMembers }
-  // })
-
-
-  // we want to format the above into this
-  let conversations = [
-    {
-      conversationId: null,
-      conversationMembers: [],
-    }
-  ]
-
-  // conversations[0].conversationId = conversationIds[0]
-  // conversations[0].conversationMembers = members
-
-  return rawQueryTest
-}
-
-async function getConversationsByUser (req) {
-  return await getFirstConversationByUser(req)
+  return usersConversations;
 }
 
 async function createConversation () {
