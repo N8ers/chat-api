@@ -17,8 +17,9 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   conversationMember.associate = function (models) {
-    conversationMember.hasOne(models.User, { foreignKey: 'id' })
-    conversationMember.hasOne(models.Conversation, { foreignKey: 'id' })
+    // conversationMember.hasOne(models.User, { foreignKey: 'memberId' })
+    conversationMember.belongsTo(models.User, { as: 'member' })
+    // conversationMember.hasOne(models.Conversation, { foreignKey: 'memberId' })
   }
 
   return conversationMember;

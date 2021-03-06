@@ -1,4 +1,4 @@
-const { sequelize } = require('../models/index')
+const { sequelize, Sequelize } = require('../models/index')
 
 async function getAllConversations () {
   return sequelize.models.Conversation.findAll();
@@ -11,27 +11,42 @@ async function getConversation (req) {
 }
 
 async function getFirstConversationByUser (req) {
-  let conversationMembers = await sequelize.models.ConversationMember.findAll({
+  let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
     raw: true,
     attributes: ['conversationId'],
     where: { memberId: req.body.userId },
   })
 
-  let conversationIds = conversationMembers.map((conversation) => conversation.conversationId)
+  // console.log('yo yo yo: ', conversationsUserIsIn)
 
-  let convoOneMembers = await sequelize.models.ConversationMember.findAll({
+  let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
+
+  let conversationUsers = await sequelize.models.ConversationMember.findAll({
     raw: true,
-    attributes: ['memberId'],
-    where: { conversationId: conversationIds[0] },
+    // attributes: ['memberId', 'conversationId'],
+    includes: [{ model: 'User' }],
+    where: { conversationId: conversationIds },
   })
 
-  let rawConvoOneMembers = convoOneMembers.map((m) => m.memberId)
+  console.log('conversationUsers ', conversationUsers)
 
-  let members = await sequelize.models.User.findAll({
-    raw: true,
-    attributes: ['id', 'username'],
-    where: { id: rawConvoOneMembers }
-  })
+  // let query = `select
+  // conversation_members."conversationId", users.id as "userId", users.username as "username"
+  // from conversation_members
+  // inner join users on conversation_members."memberId" = users.id
+  // where "conversationId" in (1,1,2,2,3,3)`
+
+  // let rawQueryTest = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+
+  // console.log('yo yo yo: ', rawQueryTest)
+
+  // let rawConvoOneMembers = convoOneMembers.map((m) => m.memberId)
+
+  // let members = await sequelize.models.User.findAll({
+  //   raw: true,
+  //   attributes: ['id', 'username'],
+  //   where: { id: rawConvoOneMembers }
+  // })
 
 
   // we want to format the above into this
@@ -42,8 +57,8 @@ async function getFirstConversationByUser (req) {
     }
   ]
 
-  conversations[0].conversationId = conversationIds[0]
-  conversations[0].conversationMembers = members
+  // conversations[0].conversationId = conversationIds[0]
+  // conversations[0].conversationMembers = members
 
   return conversations
 }
