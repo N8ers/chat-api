@@ -21,24 +21,27 @@ async function getFirstConversationByUser (req) {
 
   let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
 
-  let conversationUsers = await sequelize.models.ConversationMember.findAll({
-    raw: true,
-    // attributes: ['memberId', 'conversationId'],
-    includes: [{ model: 'User' }],
-    where: { conversationId: conversationIds },
+  // let conversationUsers = await sequelize.models.ConversationMember.findAll({
+  //   raw: true,
+  //   // attributes: ['memberId', 'conversationId'],
+  //   includes: [{ model: 'User' }],
+  //   where: { conversationId: conversationIds },
+  // })
+
+  // console.log('conversationUsers ', conversationUsers)
+
+  let query = `select
+  conversation_members."conversationId", users.id as "userId", users.username as "username"
+  from conversation_members
+  inner join users on conversation_members."memberId" = users.id
+  where "conversationId" in (:conversationIds)`
+
+  let rawQueryTest = await sequelize.query(query, { 
+    type: Sequelize.QueryTypes.SELECT,
+    replacements: { conversationIds: conversationIds }
   })
 
-  console.log('conversationUsers ', conversationUsers)
-
-  // let query = `select
-  // conversation_members."conversationId", users.id as "userId", users.username as "username"
-  // from conversation_members
-  // inner join users on conversation_members."memberId" = users.id
-  // where "conversationId" in (1,1,2,2,3,3)`
-
-  // let rawQueryTest = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
-
-  // console.log('yo yo yo: ', rawQueryTest)
+  console.log('yo yo yo: ', rawQueryTest)
 
   // let rawConvoOneMembers = convoOneMembers.map((m) => m.memberId)
 
@@ -60,7 +63,7 @@ async function getFirstConversationByUser (req) {
   // conversations[0].conversationId = conversationIds[0]
   // conversations[0].conversationMembers = members
 
-  return conversations
+  return rawQueryTest
 }
 
 async function getConversationsByUser (req) {

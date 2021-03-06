@@ -18,7 +18,14 @@ module.exports = function (sequelize, DataTypes) {
 
   conversationMember.associate = function (models) {
     // conversationMember.hasOne(models.User, { foreignKey: 'memberId' })
-    conversationMember.belongsTo(models.User, { as: 'AHHHH' })
+    conversationMember.belongsTo(models.User, 
+      {
+        foreignKey: {
+          allowNull: false,
+          as: 'memberId'
+        }
+      }
+      )
     // conversationMember.hasOne(models.Conversation, { foreignKey: 'memberId' })
   }
 
