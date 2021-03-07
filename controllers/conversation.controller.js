@@ -10,7 +10,7 @@ async function getConversation (req) {
   })
 }
 
-async function getConversationsByUser (req) {
+async function unordered (req) {
   let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
     raw: true,
     attributes: ['conversationId'],
@@ -32,6 +32,14 @@ async function getConversationsByUser (req) {
   })
 
   return usersConversations;
+}
+
+async function getConversationsByUser (req) {
+  // this version works, but it isn't ordered properly //
+  // return unordered(req)
+  // ------------------------------------------------- //
+
+
 }
 
 async function createConversation () {
