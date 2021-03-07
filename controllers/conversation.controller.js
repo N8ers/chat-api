@@ -26,7 +26,19 @@ async function unordered (req) {
   inner join users on conversation_members."memberId" = users.id
   where "conversationId" in (:conversationIds)`
 
-  let usersConversations = await sequelize.query(query, { 
+  let testQuery = `select
+  json_build_object(
+    'conversationId', conversation_members."conversationId",
+    'User', json_build_object(
+      'userId', users.id,
+      'userName', users.username 
+    )
+  ) 
+  from conversation_members
+  inner join users on conversation_members."memberId" = users.id
+  where "conversationId" in (:conversationIds)`
+
+  let usersConversations = await sequelize.query(testQuery, { 
     type: Sequelize.QueryTypes.SELECT,
     replacements: { conversationIds: conversationIds }
   })
@@ -36,9 +48,10 @@ async function unordered (req) {
 
 async function getConversationsByUser (req) {
   // this version works, but it isn't ordered properly //
-  // return unordered(req)
+  return unordered(req)
   // ------------------------------------------------- //
 
+  
 
 }
 
