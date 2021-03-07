@@ -26,7 +26,7 @@ async function unordered (req) {
   inner join users on conversation_members."memberId" = users.id
   where "conversationId" in (:conversationIds)`
 
-  let testQuery = `select
+  let queryUsersAsObjFirstTry = `select
   json_build_object(
     'conversationId', conversation_members."conversationId",
     'User', json_build_object(
@@ -38,7 +38,17 @@ async function unordered (req) {
   inner join users on conversation_members."memberId" = users.id
   where "conversationId" in (:conversationIds)`
 
-  let usersConversations = await sequelize.query(testQuery, { 
+  let queryUsersAsObjSecond = `select
+    conversation_members."conversationId",
+    json_build_object(
+      'userId', users.id,
+      'userName', users.username 
+    ) as "User"
+  from conversation_members
+  inner join users on conversation_members."memberId" = users.id
+  where "conversationId" in (:conversationIds)`
+
+  let usersConversations = await sequelize.query(queryUsersAsObjSecond, { 
     type: Sequelize.QueryTypes.SELECT,
     replacements: { conversationIds: conversationIds }
   })
