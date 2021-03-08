@@ -18,7 +18,13 @@ async function getAllMessagesByAuthorId (req) {
 
 async function getAllMessagesByConversationId (req) {
   return sequelize.models.Message.findAll({
-    where: { conversationId: req.body.conversationId }
+    where: { conversationId: req.body.conversationId },
+    include: [
+      { 
+        model: sequelize.models.User,
+        attributes: ['id', 'username']
+      }
+    ] 
   });
 }
 

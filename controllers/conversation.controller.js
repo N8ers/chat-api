@@ -48,6 +48,7 @@ async function unordered (req) {
   inner join users on conversation_members."memberId" = users.id
   where "conversationId" in (:conversationIds)`
 
+
   let usersConversations = await sequelize.query(queryUsersAsObjSecond, { 
     type: Sequelize.QueryTypes.SELECT,
     replacements: { conversationIds: conversationIds }
