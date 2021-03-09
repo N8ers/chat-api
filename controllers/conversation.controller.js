@@ -59,10 +59,35 @@ async function unordered (req) {
 
 async function getConversationsByUser (req) {
   // this version works, but it isn't ordered properly //
-  return unordered(req)
+  // return unordered(req)
   // ------------------------------------------------- //
 
-  
+  let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
+    raw: true,
+    attributes: ['conversationId', 'memberId'],
+    where: { memberId: req.body.userId },
+    // include: [
+      // {
+        // model: sequelize.model.Conversation
+      // }
+    // ]
+  })
+
+
+  // let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
+
+  // let conversationsWithFullUserObj = await sequelize.models.Conversation.findAll({
+  //   where: { id: conversationIds },
+  //   include: [
+  //     {
+  //       model: sequelize.models.
+  //     }
+  //   ]
+  // })
+
+  // return conversationsWithFullUserObj
+
+  return conversationsUserIsIn
 
 }
 
