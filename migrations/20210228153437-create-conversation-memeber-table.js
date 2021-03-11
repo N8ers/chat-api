@@ -12,7 +12,7 @@ module.exports = {
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE,
       // I think the problem might be here, is the migration trying to create 'UserId'?
-      memberId: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

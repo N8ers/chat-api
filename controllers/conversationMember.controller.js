@@ -22,7 +22,7 @@ async function getAllConversationMembersByConversation (req) {
 
 async function createConversationMember (req) {
   return sequelize.models.ConversationMember.create({
-    memberId: req.body.memberId,
+    userId: req.body.userId,
     conversationId: req.body.conversationId
   })
 }

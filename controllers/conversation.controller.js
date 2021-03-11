@@ -91,8 +91,15 @@ async function getConversationsByUser (req) {
 
 }
 
-async function createConversation () {
-  return sequelize.models.Conversation.create()
+async function createConversation (req) {
+  console.log('req.body ', req.body)
+
+  let res = sequelize.models.Conversation.create({
+    userId: req.body.userId,
+    conversationId: req.body.conversationId
+  })
+
+  console.log('res ', res)
 }
 
 async function deleteConversation (req) {
