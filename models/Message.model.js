@@ -18,8 +18,6 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   message.associate = function (models) {
-    message.hasOne(models.Conversation, { foreignKey: 'id' })
-    message.belongsTo(models.User, { foreignKey: 'id' })
   }
 
   return message;

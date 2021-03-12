@@ -15,7 +15,6 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   conversation.associate = function (models) {
-    conversation.hasMany(models.User, { foreignKey: 'id' })
   }
 
   return conversation;
