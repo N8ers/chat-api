@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: { type: DataTypes.DATE, allowNull: false },
     updatedAt: { type: DataTypes.DATE, allowNull: false },
-    userId: { type: DataTypes.INTEGER, allowNull: false },
+    memberId: { type: DataTypes.INTEGER, allowNull: false },
     conversationId: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
@@ -18,14 +18,14 @@ module.exports = function (sequelize, DataTypes) {
 
   conversationMember.associate = function (models) {
     // conversationMember.hasOne(models.User, { foreignKey: 'memberId' })
-    // conversationMember.belongsTo(models.User, 
-    //   {
-    //     foreignKey: {
-    //       allowNull: false,
-    //       as: 'memberId'
-    //     }
-    //   }
-    //   )
+    conversationMember.belongsTo(models.User, 
+      {
+        foreignKey: {
+          allowNull: false,
+          as: 'memberId'
+        }
+      }
+      )
     // conversationMember.hasOne(models.Conversation, { foreignKey: 'memberId' })
   }
 
