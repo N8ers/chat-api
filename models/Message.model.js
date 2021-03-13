@@ -9,8 +9,22 @@ module.exports = function (sequelize, DataTypes) {
     content: { type: DataTypes.STRING, allowNull: false },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE },
-    authorId: { type: DataTypes.INTEGER, allowNull: false },
-    conversationId: { type: DataTypes.INTEGER, allowNull: false },
+    authorId: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: 'id'
+      }
+    },
+    conversationId: { 
+      type: DataTypes.INTEGER, 
+      allowNull: false ,
+      references: {
+        model: Conversation,
+        key: 'id'
+      }
+    },
   },
   {
     timestamps: true,
@@ -18,6 +32,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   message.associate = function (models) {
+    message.belongsTo(models.User)
+    message.belongsTo(models.Conversation)
   }
 
   return message;

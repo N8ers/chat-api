@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   conversation.associate = function (models) {
+    conversation.hasMany(models.Message)
   }
 
   return conversation;

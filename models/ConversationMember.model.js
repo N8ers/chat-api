@@ -8,8 +8,22 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: { type: DataTypes.DATE, allowNull: false },
     updatedAt: { type: DataTypes.DATE, allowNull: false },
-    memberId: { type: DataTypes.INTEGER, allowNull: false },
-    conversationId: { type: DataTypes.INTEGER, allowNull: false },
+    memberId: { 
+      type: DataTypes.INTEGER, 
+      allowNull: false,
+      references: {
+        model: User,
+        key: 'id'
+      } 
+    },
+    conversationId: { 
+      type: DataTypes.INTEGER, 
+      allowNull: false,
+      references: {
+        model: Conversation,
+        key: 'id'
+      } 
+    },
   },
   {
     timestamps: true,
@@ -17,6 +31,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   conversationMember.associate = function (models) {
+    message.belongsTo(models.User)
+    message.belongsTo(models.Conversation)
   }
 
   return conversationMember;
