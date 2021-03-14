@@ -1,0 +1,16 @@
+USERS
+4 - Tsuki
+5 - Goon
+6 - Joe
+7 - N8
+
+CONVERSATION
+1 
+2
+3
+4
+
+CONVERSATION_MEMBERS
+convo1 - N8(7), Tsuki(4)
+convo2 - N8(7), Goon (5)
+convo3 - N8(7), Joe  (6)
