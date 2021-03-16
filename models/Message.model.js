@@ -13,7 +13,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: User,
+        model: 'User',
         key: 'id'
       }
     },
@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER, 
       allowNull: false ,
       references: {
-        model: Conversation,
+        model: 'Conversation',
         key: 'id'
       }
     },
@@ -32,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   message.associate = function (models) {
-    message.belongsTo(models.User)
+    message.belongsTo(models.User, { foreignKey: 'id' })
     message.belongsTo(models.Conversation)
   }
 
