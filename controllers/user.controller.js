@@ -6,7 +6,8 @@ async function getAllUsers () {
 
 async function getUserById (req) {
   return sequelize.models.User.findAll({
-    where: { id: req.body.id }
+    where: { id: req.body.id },
+    include: ['Message']
   })
 }
 

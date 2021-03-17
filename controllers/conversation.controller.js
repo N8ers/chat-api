@@ -62,16 +62,19 @@ async function getConversationsByUser (req) {
   // return unordered(req)
   // ------------------------------------------------- //
 
+  // User Id, 
+  // GET conversation MEMBERS, INCLUDE Members
+
   let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
-    raw: true,
-    attributes: ['conversationId', 'memberId'],
-    where: { memberId: req.body.userId },
+    // where: { memberId: req.body.userId },
     // include: [
-      // {
-        // model: sequelize.model.Conversation
-      // }
+    //   {
+    //     model: sequelize.model.User
+    //   }
     // ]
   })
+
+  console.log('conversationsUserIsIn ', conversationsUserIsIn)
 
 
   // let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
