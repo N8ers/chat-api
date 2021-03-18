@@ -7,22 +7,36 @@ async function getAllConversationMembers () {
 async function getAllConversationMembersByMember (req) { 
   return sequelize.models.ConversationMember.findAll({
     where: {
-      memberId: req.body.userId
-    }
+      user: req.body.userId
+    },
+    include: ['User']
   })
 }
+
+
+
+
 
 async function getAllConversationMembersByConversation (req) { 
   return sequelize.models.ConversationMember.findAll({
     where: {
       conversationId: req.body.conversationId
-    }
+    },
+    include: [ 
+      'User'
+    ]
   })
 }
 
+
+
+
+
+
+
 async function createConversationMember (req) {
   return sequelize.models.ConversationMember.create({
-    memberId: req.body.userId,
+    userId: req.body.userId,
     conversationId: req.body.conversationId
   })
 }
