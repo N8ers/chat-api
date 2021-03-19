@@ -14,7 +14,7 @@ async function unordered (req) {
   let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
     raw: true,
     attributes: ['conversationId'],
-    where: { memberId: req.body.userId },
+    where: { userId: req.body.userId },
   })
 
 
@@ -23,7 +23,7 @@ async function unordered (req) {
   let query = `select
   conversation_members."conversationId", users.id as "userId", users.username as "username"
   from conversation_members
-  inner join users on conversation_members."memberId" = users.id
+  inner join users on conversation_members."userId" = users.id
   where "conversationId" in (:conversationIds)`
 
   let queryUsersAsObjFirstTry = `select
@@ -35,7 +35,7 @@ async function unordered (req) {
     )
   ) 
   from conversation_members
-  inner join users on conversation_members."memberId" = users.id
+  inner join users on conversation_members."userId" = users.id
   where "conversationId" in (:conversationIds)`
 
   let queryUsersAsObjSecond = `select
@@ -45,7 +45,7 @@ async function unordered (req) {
       'userName', users.username 
     ) as "User"
   from conversation_members
-  inner join users on conversation_members."memberId" = users.id
+  inner join users on conversation_members."userId" = users.id
   where "conversationId" in (:conversationIds)`
 
 
@@ -59,22 +59,22 @@ async function unordered (req) {
 
 async function getConversationsByUser (req) {
   // this version works, but it isn't ordered properly //
-  // return unordered(req)
+  return unordered(req)
   // ------------------------------------------------- //
 
   // User Id, 
   // GET conversation MEMBERS, INCLUDE Members
 
-  let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
+  // let conversationsUserIsIn = await sequelize.models.ConversationMember.findAll({
     // where: { memberId: req.body.userId },
     // include: [
     //   {
     //     model: sequelize.model.User
     //   }
     // ]
-  })
+  // })
 
-  console.log('conversationsUserIsIn ', conversationsUserIsIn)
+  // console.log('conversationsUserIsIn ', conversationsUserIsIn)
 
 
   // let conversationIds = conversationsUserIsIn.map((conversation) => conversation.conversationId)
@@ -90,7 +90,7 @@ async function getConversationsByUser (req) {
 
   // return conversationsWithFullUserObj
 
-  return conversationsUserIsIn
+  // return conversationsUserIsIn
 
 }
 
