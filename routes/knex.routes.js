@@ -1,15 +1,5 @@
 const router = require('express').Router()
-
-const knex = require('knex')({
-  client: 'postgres',
-  connection: {
-    host : 'localhost',
-    user : 'postgres',
-    password : '2345',
-    database : 'chatapi'
-  }
-});
-
+const knex = require('../config/config.js')
 
 router.get('/users', async (req, res) => {
   const users = await knex.select().from('users');
