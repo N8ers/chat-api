@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const knex = require('../config/config.js')
+const knex = require('../config/config')
 
 router.get('/users', async (req, res) => {
   const users = await knex.select().from('users');
