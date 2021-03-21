@@ -1,13 +1,5 @@
-const dev = {
-  client: 'postgres',
-  connection: {
-    host : 'localhost',
-    user : 'postgres',
-    password : '2345',
-    database : 'chatapi'
-  }
-}
+const { development, production } = require('../knexfile');
 
 // at some point make prod as well, and pass in based on env
-const knex = require('knex')(dev)
+const knex = require('knex')(development)
 module.exports = knex;
