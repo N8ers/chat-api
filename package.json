@@ -12,6 +12,7 @@
     "sequelize-migration-skeleton": "npx sequelize-cli migration:generate --name migration-skeleton",
     "sequelize-plant-seed": "npx sequelize-cli db:seed:all --debug",
     "sequelize-undo-seed": "npx sequelize-cli db:seed:undo",
+    "create-seed": "npx knex seed:make fresh_seed",
     "plant-seed": "npx knex seed:run",
     "migrate-up": "npx knex migrate:up",
     "migrate-down": "npx knex migrate:down",
