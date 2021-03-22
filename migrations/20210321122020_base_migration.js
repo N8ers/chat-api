@@ -1,23 +1,29 @@
 exports.up = function(knex) {
   return Promise.all([
     knex.schema.createTable('users', function(table) { 
-      table.increments('id')
+      table.increments('id').primary(),
       table.string('username')
     }),
     knex.schema.createTable('conversations', function(table) { 
-      table.increments('id')
+      table.increments('id').primary()
     }),
     knex.schema.createTable('messages', function(table) { 
-      table.increments('id'),
+      table.increments('id').primary(),
       table.string('content'),
-      table.integer('userId').references('id').inTable('users'),
-      table.integer('conversationId').references('id').inTable('conversations'),
-      table.timestamp('sent_at').defaultTo(knex.fn.now())
+      table.timestamp('sent_at').defaultTo(knex.fn.now()),
+      table.integer('userId').unsigned().notNullable(),
+      table.integer('conversationId').unsigned().notNullable(),
+
+      table.foreign('userId').references('id').inTable('users').onDelete('CASCADE'),
+      table.foreign('conversationId').references('id').inTable('conversations').onDelete('CASCADE')
     }),
     knex.schema.createTable('conversation_members', function(table) { 
-      table.increments('id'),
-      table.integer('userId').references('id').inTable('users'),
-      table.integer('conversationId').references('id').inTable('conversations')
+      table.increments('id').primary(),
+      table.integer('userId').unsigned().notNullable(),
+      table.integer('conversationId').unsigned().notNullable(),
+      
+      table.foreign('userId').references('id').inTable('users').onDelete('CASCADE'),
+      table.foreign('conversationId').references('id').inTable('conversations').onDelete('CASCADE')
     })
   ])
 };
