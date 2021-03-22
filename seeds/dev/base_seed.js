@@ -1,7 +1,6 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  // return knex('table_name').del()
   return Promise.all([
     knex('conversation_members').del(),
     knex('conversations').del(),

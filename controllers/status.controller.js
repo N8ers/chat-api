@@ -1,11 +1,13 @@
-const { sequelize } = require('../models/index')
+const knex = require('../config/config')
 
 async function checkConnection () {
-  let result = null;
-  await sequelize.authenticate()
-    .then(() => result = true)
-    .catch((err) => result = false)
-  return result;
+  const users = await knex.select(1).from('users').limit(1)
+
+  if (users && users.length) {
+    return 'db connection successful'
+  } else {
+    return 'db connection failed'
+  }
 }
 
 module.exports = {
