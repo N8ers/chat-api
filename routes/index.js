@@ -4,7 +4,8 @@ const cors = require('cors')
 
 const routes = {
   status: require('./status.routes'),
-  knexCheck: require('./knex.routes')
+  knexCheck: require('./knex.routes'),
+  genericRoute: require('./generic.routes')
   // user: require('./user.routes'),
   // conversation: require('./conversation.routes'),
   // message: require('./message.routes'),
@@ -24,6 +25,7 @@ app.use(
 
 app.use('/status', routes.status)
 app.use('/knex', routes.knexCheck)
+app.use('/generic', routes.genericRoute)
 // app.use('/user', routes.user)
 // app.use('/conversation', routes.conversation)
 // app.use('/message', routes.message)
