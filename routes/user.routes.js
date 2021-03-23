@@ -1,35 +1,26 @@
 const router = require('express').Router()
+const knex = require('../config/config')
 
-const { getAllUsers, getUserById, createUser, editUser, deleteUser } = require('../controllers/user.controller')
+// const { createUser, editUser } = require('../controllers/user.controller')
+const { buildGenericRoutes } = require('./genericRouteBuilder');
 
-// get Users
-router.get('/users', async (req, res) => {
-  let users = await getAllUsers()
-  res.send(users)
-})
+const genericRoutesToBuild = ['GetAll', 'GetById', 'DeleteById']
+const tableToQuery = 'users'
 
-// get User by id
-router.get('/user', async (req, res) => {
-  let user = await getUserById(req)
-  res.send(user)
-})
+buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 
 // create User
-router.post('/user', async (req, res) => {
-  let result = await createUser(req)
-  res.send({ users: result })
+router.post('/', async (req, res) => {
+  // make this controller at some point
+  const username = req.body.username
+  console.log('username ', username)
+  const newUser = await knex('users').insert({ id: null, username }).returning('*');
+  // console.log('newuser ', newUser)
+  res.json(newUser)
 })
 
 // edit User username
-router.put('/user', async (req, res) => {
-  let result = await editUser(req)
-  res.send({ user: result })
-})
-
-// delete User by id
-router.delete('/user', async (req, res) => {
-  let result = await deleteUser(req)
-  res.send({ user: result })
-})
+// router.put('/user', async (req, res) => {/
+// })
 
 module.exports = router;
