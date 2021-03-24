@@ -12,10 +12,8 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 // create User
 router.post('/', async (req, res) => {
   // make this controller at some point
-  const username = req.body.username
-  console.log('username ', username)
-  const newUser = await knex('users').insert({ id: null, username }).returning('*');
-  // console.log('newuser ', newUser)
+  const { username } = req.body
+  const newUser = await knex('users').insert({ username }, ['id']).returning('*');
   res.json(newUser)
 })
 
