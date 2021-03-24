@@ -4,9 +4,9 @@ const knex = require('../config/config')
 // const { createUser, editUser } = require('../controllers/user.controller')
 const { buildGenericRoutes } = require('./genericRouteBuilder');
 
+// generic routes
 const genericRoutesToBuild = ['GetAll', 'GetById', 'DeleteById']
 const tableToQuery = 'users'
-
 buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 
 // create User
@@ -18,7 +18,10 @@ router.post('/', async (req, res) => {
 })
 
 // edit User username
-// router.put('/user', async (req, res) => {/
-// })
+router.put('/', async (req, res) => {
+  const { id, username } = req.body
+  const modifiedUser = await knex.select('id').from('users').where({ id }).update({ username }).returning('*')
+  res.json(modifiedUser)
+})
 
 module.exports = router;
