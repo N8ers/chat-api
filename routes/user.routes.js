@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const knex = require('../config/config')
 
-// const { createUser, editUser } = require('../controllers/user.controller')
+const { } = require('../controllers/user.controller')
 const { buildGenericRoutes } = require('./genericRouteBuilder');
 
 // generic routes
@@ -13,7 +13,7 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 router.post('/', async (req, res) => {
   // make this controller at some point
   const { username } = req.body
-  const newUser = await knex('users').insert({ username }, ['id']).returning('*');
+  const newUser = await knex('users').insert({ username }, ['id']).returning('*')
   res.json(newUser)
 })
 

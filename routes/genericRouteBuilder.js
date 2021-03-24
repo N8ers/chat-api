@@ -2,7 +2,6 @@ const knex = require('../config/config')
 
 async function buildGenericRoutes (routesToBuild, tableToQuery, router) {
   if (routesToBuild.includes('GetAll')) {
-    console.log('getall')
     router.get(`/`, async (req, res) => {
       let result = await knex.select().from(tableToQuery);
       res.send(result)
