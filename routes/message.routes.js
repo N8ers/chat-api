@@ -1,13 +1,6 @@
 const router = require('express').Router()
 
-const { 
-  getAllMessages,
-  getAllMessagesById,
-  getAllMessagesByAuthorId,
-  getAllMessagesByConversationId,
-  createMessage,
-  deleteMessageById
- } = require('../controllers/message.controller')
+const { } = require('../controllers/message.controller')
 
 // get Messages
 router.get('/messages', async (req, res) => {

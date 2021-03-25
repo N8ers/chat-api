@@ -1,12 +1,6 @@
 const router = require('express').Router()
 
-const { 
-  createConversationMember, 
-  getAllConversationMembers, 
-  getAllConversationMembersByMember,
-  getAllConversationMembersByConversation,
-  deleteConversationMember 
-} = require('../controllers/conversationMember.controller')
+const { } = require('../controllers/conversationMember.controller')
 
 // get allConversationMembers
 router.get('/conversationMembers', async (req, res) => { 
