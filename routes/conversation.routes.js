@@ -1,40 +1,27 @@
 const router = require('express').Router()
+const knex = require('../config/config')
 
-const { 
-  getAllConversations, 
-  getConversation, 
-  getConversationsByUser,
-  createConversation, 
-  deleteConversation 
-} = require('../controllers/conversation.controller')
+const { } = require('../controllers/conversation.controller')
+const { buildGenericRoutes } = require('./genericRouteBuilder');
 
-// get Conversations
-router.get('/conversations', async (req, res) => {
-  let conversations = await getAllConversations()
-  res.send(conversations)
-})
-
-// get Conversation by id
-router.get('/conversation', async (req, res) => {
-  let conversation = await getConversation(req)
-  res.send(conversation)
-})
-
-router.get('/conversationsByUser', async (req, res) => {
-  let conversations = await getConversationsByUser(req)
-  res.send(conversations)
-})
+// generic routes
+const genericRoutesToBuild = ['GetAll', 'GetById', 'DeleteById']
+const tableToQuery = 'conversations'
+buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 
 // create Conversation
-router.post('/conversation', async (req, res) => {
-  let conversation = await createConversation(req)
-  res.send({ conversation })
+router.post('/', async (req, res) => {
+  // make this controller at some point
+  const { name } = req.body
+  const newConversation = await knex('conversations').insert({ name }, ['id']).returning('*')
+  res.json(newConversation)
 })
 
-// delete Conversation by id
-router.delete('/conversation', async (req, res) => { 
-  let conversation = await deleteConversation(req)
-  res.send({ conversation })
+// edit Conversation name
+router.put('/', async (req, res) => {
+  const { id, name } = req.body
+  const modifiedConversation = await knex.select('id').from('conversations').where({ id }).update({ name }).returning('*')
+  res.json(modifiedConversation)
 })
 
 module.exports = router;
