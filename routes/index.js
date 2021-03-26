@@ -3,10 +3,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const routes = {
-  status: require('./status.routes'),
   user: require('./user.routes'),
-  conversation: require('./conversation.routes'),
+  custom: require('./custom.routes'),
+  status: require('./status.routes'),
   message: require('./message.routes'),
+  conversation: require('./conversation.routes'),
   conversationMember: require('./conversationMember.routes')
 }
 
@@ -22,10 +23,11 @@ app.use(
   })
 )
 
-app.use('/status', routes.status)
 app.use('/users', routes.user)
-app.use('/conversations', routes.conversation)
+app.use('/status', routes.status)
+app.use('/custom', routes.custom)
 app.use('/messages', routes.message)
+app.use('/conversations', routes.conversation)
 app.use('/conversation_members', routes.conversationMember)
 
 

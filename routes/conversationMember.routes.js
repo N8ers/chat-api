@@ -2,7 +2,7 @@ const router = require('express').Router()
 const knex = require('../config/config')
 
 const { } = require('../controllers/conversationMember.controller')
-const { buildGenericRoutes } = require('./genericRouteBuilder');
+const { buildGenericRoutes } = require('../helpers/genericRouteBuilder');
 
 // generic routes
 const genericRoutesToBuild = ['GetAll', 'GetById', 'DeleteById']
