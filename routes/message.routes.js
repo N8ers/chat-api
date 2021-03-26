@@ -18,7 +18,10 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 // })
 
 // create Message
-// router.post('/message', async (req, res) => {
-// })
+router.post('/', async (req, res) => {
+  const { content, userId, conversationId } = req.body
+  const newMessage = await knex('messages').insert({ content, userId, conversationId }, ['id', 'sentAt']).returning('*')
+  res.json(newMessage)
+})
 
 module.exports = router;
