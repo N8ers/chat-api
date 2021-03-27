@@ -21,9 +21,9 @@ async function seed () {
   console.log('users ', users)
 
   const conversations = await knex('conversations').insert([
-    { name: 'n8 and Tsuki' },
-    { name: 'Goon and n8' },
-    { name: 'Joe and n8' },
+    { name: 'Goon n N8' },
+    { name: 'n8 & Tsuki' },
+    { name: 'Joe and Nate' },
   ]).returning('*')
   console.log('conversations ', conversations)
 
@@ -38,10 +38,10 @@ async function seed () {
   console.log('conversaion_members ', conversation_members)
 
   const messages = await knex('messages').insert([
-    { userId: users[0].id, conversationId: conversations[0].id, content: 'Meow!'       },
-    { userId: users[3].id, conversationId: conversations[0].id, content: 'Hi, Tsuki'   },
-    { userId: users[1].id, conversationId: conversations[1].id, content: 'Hi, Honey'   },
-    { userId: users[3].id, conversationId: conversations[1].id, content: 'Hello, bean' },
+    { userId: users[0].id, conversationId: conversations[0].id, content: 'Hi honey!'       },
+    { userId: users[3].id, conversationId: conversations[0].id, content: 'Hello, dear'   },
+    { userId: users[1].id, conversationId: conversations[1].id, content: 'Meow!'   },
+    { userId: users[3].id, conversationId: conversations[1].id, content: 'Hello, tsuki' },
     { userId: users[2].id, conversationId: conversations[2].id, content: 'Sup bro'     },
     { userId: users[3].id, conversationId: conversations[2].id, content: 'Hi, Joe'     },
   ]).returning('*')
