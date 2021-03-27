@@ -2,8 +2,8 @@ const router = require('express').Router()
 const knex = require('../config/config')
 
 
-router.get('/init', async (req, res) => {
-  const { userId } = req.body
+router.get('/init/:userId', async (req, res) => {
+  const { userId } = req.params
   const conversations = await 
     knex.select('*')
       .from('conversation_members')
@@ -16,11 +16,19 @@ router.get('/init', async (req, res) => {
 router.get('/selectConversation/:id', async (req, res) => {
   const { id } = req.params
   const conversation = await
-    knex.select('*')
+    knex.select(
+      'messages.id', 
+      'messages.content', 
+      'messages.sent_at',
+      'messages.conversationId', 
+      'messages.userId',
+      'users.username'
+      )
       .from('messages')
       .where('messages.conversationId', id)
       .join('users', 'users.id', '=', 'messages.userId')
       .orderBy('messages.sent_at')
+
 
   res.json(conversation)
 })
