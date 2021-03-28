@@ -4,6 +4,17 @@ const cors = require('cors')
 const http = require('http')
 const socketio = require('socket.io')
 
+const { updateMessages } = require('../controllers/custom.controller')
+
+const routes = {
+  user: require('./user.routes'),
+  custom: require('./custom.routes'),
+  status: require('./status.routes'),
+  message: require('./message.routes'),
+  conversation: require('./conversation.routes'),
+  conversationMember: require('./conversationMember.routes')
+}
+
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server, {
@@ -22,19 +33,22 @@ app.use(
   })
 )
 
-io.on('connection', (socket) => {
+io.sockets.on('connection', (socket) => {
   console.log('server socket connection')
   socket.emit('message', 'Hello Vue, I am server!')
+  
+  socket.on('selectConversation', async ({ conversationId }) => {
+    console.log('socket selectConversation fired')
+    const messages = await updateMessages(conversationId);
+    socket.emit('messages', messages)
+  })
 })
 
-const routes = {
-  user: require('./user.routes'),
-  custom: require('./custom.routes'),
-  status: require('./status.routes'),
-  message: require('./message.routes'),
-  conversation: require('./conversation.routes'),
-  conversationMember: require('./conversationMember.routes')
-}
+// lets the socket be accessable through the req param
+app.use(function(req,res,next){
+  req.io = io;
+  next();
+});
 
 app.use('/users', routes.user)
 app.use('/status', routes.status)
@@ -43,4 +57,4 @@ app.use('/messages', routes.message)
 app.use('/conversations', routes.conversation)
 app.use('/conversation_members', routes.conversationMember)
 
-module.exports = server;
+module.exports = { server };

@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const knex = require('../config/config')
+const { updateMessages } = require('../controllers/custom.controller')
 
 const { } = require('../controllers/message.controller')
-const { buildGenericRoutes } = require('../helpers/genericRouteBuilder');
+const { buildGenericRoutes } = require('../helpers/genericRouteBuilder')
 
 // generic routes
 const genericRoutesToBuild = ['GetAll', 'GetById', 'DeleteById']
@@ -20,7 +21,13 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 // create Message
 router.post('/', async (req, res) => {
   const { content, userId, conversationId } = req.body
-  const newMessage = await knex('messages').insert({ content, userId, conversationId }, ['id', 'sentAt']).returning('*')
+  const newMessage = await 
+    knex('messages')
+    .insert({ content, userId, conversationId }, ['id', 'sentAt'])
+    .returning('*')
+  const messages = await updateMessages(conversationId)
+
+  req.io.emit('messages', messages)
   res.json(newMessage)
 })
 

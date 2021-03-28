@@ -1,4 +1,4 @@
-const server = require('./routes/index')
+const { server } = require('./routes/index')
 const knex = require('./config/config')
 
 const PORT = 3000
