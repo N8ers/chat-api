@@ -4,6 +4,14 @@ exports.up = function(knex) {
       table.increments('id'), // increments: `id int unsigned not null auto_increment primary key`
       table.string('username')
     }),
+    knex.schema.createTable('friends', function(table) {
+      table.increments('id'),
+      table.integer('userId').unsigned().notNullable(),
+      table.integer('friendId').unsigned().notNullable(),
+
+      table.foreign('userId').references('id').inTable('users').onDelete('CASCADE'),
+      table.foreign('friendId').references('id').inTable('users').onDelete('CASCADE')
+    }),
     knex.schema.createTable('conversations', function(table) { 
       table.increments('id'),
       table.string('name')
@@ -30,10 +38,11 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  // return Promise.all([
-  //   knex.schema.dropTable('messages'),
-  //   knex.schema.dropTable('conversation_members'),
-  //   knex.schema.dropTable('conversations'),
-  //   knex.schema.dropTable('users')
-  // ])
+  return Promise.all([
+    knex.schema.dropTableIfExists('messages'),
+    knex.schema.dropTableIfExists('conversation_members'),
+    knex.schema.dropTableIfExists('friends'),
+    knex.schema.dropTableIfExists('conversations'),
+    knex.schema.dropTableIfExists('users')
+  ])
 };
