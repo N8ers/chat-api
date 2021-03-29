@@ -10,6 +10,7 @@ const routes = {
   user: require('./user.routes'),
   custom: require('./custom.routes'),
   status: require('./status.routes'),
+  friend: require('./friend.routes'),
   message: require('./message.routes'),
   conversation: require('./conversation.routes'),
   conversationMember: require('./conversationMember.routes')
@@ -53,6 +54,7 @@ app.use(function(req,res,next){
 app.use('/users', routes.user)
 app.use('/status', routes.status)
 app.use('/custom', routes.custom)
+app.use('/friends', routes.friend)
 app.use('/messages', routes.message)
 app.use('/conversations', routes.conversation)
 app.use('/conversation_members', routes.conversationMember)
