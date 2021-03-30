@@ -8,6 +8,7 @@
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "plant-custom-seed": "node ./config/customSeed.js",
+    "plant-partial-seed": "node ./config/partialSeed.js",
     "migrate-up": "npx knex migrate:up",
     "migrate-down": "npx knex migrate:down",
     "migrate-create": "npx knex migrate:make fresh_migration"
