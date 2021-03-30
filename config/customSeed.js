@@ -32,12 +32,12 @@ async function seed () {
   console.log('users ', users)
 
   const friends = await knex('friends').insert([
-    { userId: users[2].id, friendId: users[3].id }, // Joe   & N8
-    { userId: users[3].id, friendId: users[2].id }, // N8    & Joe
-    { userId: users[0].id, friendId: users[3].id }, // Goon  & N8
-    { userId: users[3].id, friendId: users[0].id }, // N8    & Goon
-    { userId: users[1].id, friendId: users[3].id }, // Tsuki & N8
-    { userId: users[3].id, friendId: users[1].id }, // N8    & Tsuki
+    { user_id: users[2].id, friend_id: users[3].id }, // Joe   & N8
+    { user_id: users[3].id, friend_id: users[2].id }, // N8    & Joe
+    { user_id: users[0].id, friend_id: users[3].id }, // Goon  & N8
+    { user_id: users[3].id, friend_id: users[0].id }, // N8    & Goon
+    { user_id: users[1].id, friend_id: users[3].id }, // Tsuki & N8
+    { user_id: users[3].id, friend_id: users[1].id }, // N8    & Tsuki
   ]).returning('*')
   console.log('friends: ', friends)
 
@@ -49,22 +49,22 @@ async function seed () {
   console.log('conversations ', conversations)
 
   const conversation_members = await knex('conversation_members').insert([
-    { userId: users[3].id, conversationId: conversations[0].id },
-    { userId: users[0].id, conversationId: conversations[0].id },
-    { userId: users[3].id, conversationId: conversations[1].id },
-    { userId: users[1].id, conversationId: conversations[1].id },
-    { userId: users[3].id, conversationId: conversations[2].id },
-    { userId: users[2].id, conversationId: conversations[2].id }
+    { user_id: users[3].id, conversation_id: conversations[0].id },
+    { user_id: users[0].id, conversation_id: conversations[0].id },
+    { user_id: users[3].id, conversation_id: conversations[1].id },
+    { user_id: users[1].id, conversation_id: conversations[1].id },
+    { user_id: users[3].id, conversation_id: conversations[2].id },
+    { user_id: users[2].id, conversation_id: conversations[2].id }
   ]).returning('*')
   console.log('conversaion_members ', conversation_members)
 
   const messages = await knex('messages').insert([
-    { userId: users[0].id, conversationId: conversations[0].id, content: 'Hi honey!'    },
-    { userId: users[3].id, conversationId: conversations[0].id, content: 'Hello, dear'  },
-    { userId: users[1].id, conversationId: conversations[1].id, content: 'Meow!'        },
-    { userId: users[3].id, conversationId: conversations[1].id, content: 'Hello, tsuki' },
-    { userId: users[2].id, conversationId: conversations[2].id, content: 'Sup bro'      },
-    { userId: users[3].id, conversationId: conversations[2].id, content: 'Hi, Joe'      },
+    { user_id: users[0].id, conversation_id: conversations[0].id, content: 'Hi honey!'    },
+    { user_id: users[3].id, conversation_id: conversations[0].id, content: 'Hello, dear'  },
+    { user_id: users[1].id, conversation_id: conversations[1].id, content: 'Meow!'        },
+    { user_id: users[3].id, conversation_id: conversations[1].id, content: 'Hello, tsuki' },
+    { user_id: users[2].id, conversation_id: conversations[2].id, content: 'Sup bro'      },
+    { user_id: users[3].id, conversation_id: conversations[2].id, content: 'Hi, Joe'      },
   ]).returning('*')
   console.log('messages ', messages)
 }
