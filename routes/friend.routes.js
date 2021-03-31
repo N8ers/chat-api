@@ -9,11 +9,11 @@ const tableToQuery = 'friends'
 buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 
 // get friends by user id
-router.get(`/userId/:id`, async (req, res) => {
+router.get(`/user_id/:id`, async (req, res) => {
   let friends = await 
-    knex.select('friendId as userId', 'username')
-    .from('friends').where({ userId: req.params.id })
-    .join('users', 'friendId', '=', 'users.id')
+    knex.select('friend_id as user_id', 'username')
+    .from('friends').where({ user_id: req.params.id })
+    .join('users', 'friend_id', '=', 'users.id')
   res.send(friends)
 })
 

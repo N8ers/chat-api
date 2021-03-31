@@ -15,17 +15,17 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 // })
 
 // get Messages by ConversationId
-// router.get('/conversationId', async (req, res) => {
+// router.get('/conversation_id', async (req, res) => {
 // })
 
 // create Message
 router.post('/', async (req, res) => {
-  const { content, userId, conversationId } = req.body
+  const { content, user_id, conversation_id } = req.body
   const newMessage = await 
     knex('messages')
-    .insert({ content, userId, conversationId }, ['id', 'sentAt'])
+    .insert({ content, user_id, conversation_id }, ['id', 'sentAt'])
     .returning('*')
-  const messages = await updateMessages(conversationId)
+  const messages = await updateMessages(conversation_id)
 
   req.io.emit('messages', messages)
   res.json(newMessage)

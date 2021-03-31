@@ -1,13 +1,14 @@
 const router = require('express').Router()
 const knex = require('../config/config')
 
-router.get('/init/:userId', async (req, res) => {
-  const { userId } = req.params
+router.get('/init/:user_id', async (req, res) => {
+  const { user_id } = req.params
   const conversations = await 
     knex.select('*')
       .from('conversation_members')
-      .join('conversations', 'conversations.id', '=', 'conversation_members.conversationId')
-      .where('conversation_members.userId', userId)
+      .join('conversations', 'conversations.id', '=', 'conversation_members.conversation_id')
+      .join('users', 'users.id', '=', 'conversation_members.user_id')
+      .where('conversation_members.user_id', user_id)
   
   res.json(conversations)
 })
@@ -19,13 +20,13 @@ router.get('/selectConversation/:id', async (req, res) => {
       'messages.id', 
       'messages.content', 
       'messages.sent_at',
-      'messages.conversationId', 
-      'messages.userId',
+      'messages.conversation_id', 
+      'messages.user_id',
       'users.username'
       )
       .from('messages')
-      .where('messages.conversationId', id)
-      .join('users', 'users.id', '=', 'messages.userId')
+      .where('messages.conversation_id', id)
+      .join('users', 'users.id', '=', 'messages.user_id')
       .orderBy('messages.sent_at')
 
   res.json(conversation)

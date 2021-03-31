@@ -12,8 +12,8 @@ buildGenericRoutes(genericRoutesToBuild, tableToQuery, router)
 
 // create MemberConversation
 router.post('/', async (req, res) => {
-  const { userId, conversationId } = req.body
-  const newConversationMember = await knex('conversation_members').insert({ userId, conversationId }, ['id']).returning('*')
+  const { user_id, conversation_id } = req.body
+  const newConversationMember = await knex('conversation_members').insert({ user_id, conversation_id }, ['id']).returning('*')
   res.json(newConversationMember)
 })
 
