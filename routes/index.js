@@ -38,9 +38,8 @@ io.sockets.on('connection', (socket) => {
   console.log('server socket connection')
   socket.emit('message', 'Hello Vue, I am server!')
   
-  socket.on('selectConversation', async ({ conversation_id }) => {
-    console.log('socket selectConversation fired')
-    const messages = await updateMessages(conversation_id);
+  socket.on('selectConversation', async (data) => {
+    const messages = await updateMessages(data.conversation_id);
     socket.emit('messages', messages)
   })
 })
